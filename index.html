@@ -2,80 +2,93 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>نبض مدريد - المنصة الملكية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bernabéu Pulse | البرنابيو</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f0f0; margin: 0; }
-        header { background: #00529f; color: #fecb00; padding: 20px; text-align: center; font-weight: bold; }
-        .match-box { background: #fff; margin: 20px; padding: 20px; border-radius: 15px; border-right: 5px solid #00529f; }
-        .analysis { font-style: italic; color: #333; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px; }
-        .sidebar { height: 100%; width: 0; position: fixed; top: 0; right: 0; background: #003366; transition: 0.5s; padding-top: 60px; z-index: 10; }
-        .sidebar a { padding: 15px; display: block; color: white; text-decoration: none; }
+        :root { --primary-gold: #cca43b; --madrid-blue: #111827; --pure-white: #ffffff; }
+        body { font-family: sans-serif; background: #f3f4f6; margin: 0; }
+        
+        /* التنسيقات العامة */
         .page { display: none; padding: 20px; }
-        .active { display: block; }
+        .active-page { display: block; }
+        
+        header { background: var(--madrid-blue); color: white; padding: 15px; display: flex; justify-content: space-between; align-items: center; }
+        .sidebar { position: fixed; top: 0; width: 280px; height: 100%; background: var(--madrid-blue); z-index: 1000; transition: 0.3s; padding-top: 60px; }
+        [dir="rtl"] .sidebar { right: -280px; } [dir="ltr"] .sidebar { left: -280px; }
+        .sidebar a { display: block; color: white; padding: 20px; text-decoration: none; border-bottom: 1px solid #333; }
+        
+        /* تصميم المقارنة */
+        .comp-container { display: flex; gap: 10px; justify-content: center; margin-top: 20px; }
+        select { padding: 10px; border-radius: 8px; border: 1px solid var(--primary-gold); }
+        .result-card { background: white; padding: 20px; border-radius: 15px; margin-top: 20px; border-top: 5px solid var(--primary-gold); }
     </style>
 </head>
 <body>
 
-<header onclick="toggleNav()">☰ القائمة الملكية</header>
+<header>
+    <div class="logo">Bernabéu <b>Pulse</b></div>
+    <div onclick="toggleSidebar()" style="cursor:pointer; font-size: 25px;">☰</div>
+</header>
 
-<div id="mySidebar" class="sidebar">
-    <a href="#" onclick="showPage('home')">الرئيسية</a>
-    <a href="#" onclick="showPage('analysis')">تحليل وفلسفة</a>
+<div id="sidebar" class="sidebar">
+    <a href="#" onclick="showPage('home')">🏠 الرئيسية</a>
+    <a href="#" onclick="showPage('players')">👥 اللاعبين</a>
+    <a href="#" onclick="showPage('compare')">📊 المقارنة الذكية</a>
+    <a href="#" onclick="showPage('news')">📰 الأخبار الكاملة</a>
 </div>
 
-<div id="home" class="page active">
-    <div id="match-content" class="match-box"></div>
+<!-- صفحات الموقع -->
+<div id="home" class="page active-page"><h1>الرئيسية</h1><p>مرحباً بك في نبض البرنابيو.</p></div>
+
+<div id="players" class="page">
+    <h1>قائمة اللاعبين</h1>
+    <div id="players-list">سيتم عرض جميع لاعبي الفريق هنا مع صورهم وأرقامهم.</div>
 </div>
 
-<div id="analysis" class="page">
-    <h2>فلسفة الملكي</h2>
-    <p>ريال مدريد ليس مجرد نادٍ، إنه عقيدة كروية تؤمن بأن المستحيل مجرد كلمة في قاموس الضعفاء.</p>
+<div id="compare" class="page">
+    <h1>مركز المقارنة الذكي</h1>
+    <div class="comp-container">
+        <select id="p1"><option>فينيسيوس جونيور</option><option>مبابي</option></select>
+        <span>VS</span>
+        <select id="p2"><option>مبابي</option><option>فينيسيوس جونيور</option></select>
+        <button onclick="comparePlayers()">قارن الآن</button>
+    </div>
+    <div id="comp-result" class="result-card" style="display:none;"></div>
+</div>
+
+<div id="news" class="page">
+    <h1>أخبار النادي</h1>
+    <div id="news-feed">
+        <div class="news-card"><h3>فوز الملكي بالليغا</h3><p>تفاصيل الخبر كاملة هنا...</p></div>
+        <hr>
+        <div class="news-card"><h3>إصابة اللاعب...</h3><p>تقرير طبي مفصل...</p></div>
+    </div>
 </div>
 
 <script>
-    // قاعدة بيانات المباراة (يمكنك تحديثها يدوياً بسهولة)
-    const nextMatch = {
-        exists: true,
-        opponent: "برشلونة",
-        time: "15 يوليو 2026 - 10:00 مساءً",
-        channel: "beIN Sports HD1",
-        predictedLineup: "كورتوا، كارفاخال، ميليتاو، روديغر، ميندي، تشواميني، فالفيردي، بيلينجهام، فينيسيوس، مبابي، رودريغو",
-        weaknesses: "التقدم المبالغ فيه للأظهرة الذي يترك مساحات خلفية.",
-        prediction: "فوز الريال 2-1 بفضل روح العودة في الدقائق الأخيرة.",
-        reason: "الذكاء الاصطناعي يرى أن شخصية ريال مدريد في الأوقات الحرجة تتفوق على أي تنظيم تكتيكي للخصم."
-    };
-
-    function loadMatch() {
-        const div = document.getElementById('match-content');
-        if (!nextMatch.exists) {
-            div.innerHTML = "<h3>لا توجد مباراة قادمة حالياً.</h3>";
-        } else {
-            div.innerHTML = `
-                <h3>المباراة القادمة: ريال مدريد vs ${nextMatch.opponent}</h3>
-                <p><b>الموعد:</b> ${nextMatch.time}</p>
-                <p><b>القنوات الناقلة:</b> ${nextMatch.channel}</p>
-                <p><b>التشكيلة المتوقعة:</b> ${nextMatch.predictedLineup}</p>
-                <div class="analysis">
-                    <p><b>تحليل الذكاء الاصطناعي:</b> ${nextMatch.reason}</p>
-                    <p><b>سلبيات الخصم:</b> ${nextMatch.weaknesses}</p>
-                    <p><b>النتيجة المتوقعة:</b> ${nextMatch.prediction}</p>
-                </div>
-            `;
-        }
-    }
-
-    function toggleNav() {
-        let side = document.getElementById("mySidebar");
-        side.style.width = side.style.width === "250px" ? "0" : "250px";
+    function toggleSidebar() {
+        const side = document.getElementById('sidebar');
+        const dir = document.documentElement.dir;
+        if (dir === 'rtl') side.style.right = (side.style.right === "0px") ? "-280px" : "0px";
+        else side.style.left = (side.style.left === "0px") ? "-280px" : "0px";
     }
 
     function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        toggleNav();
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+        document.getElementById(pageId).classList.add('active-page');
+        toggleSidebar();
     }
 
-    loadMatch();
+    function comparePlayers() {
+        const res = document.getElementById('comp-result');
+        res.style.display = 'block';
+        res.innerHTML = `<h3>نتائج المقارنة</h3>
+            <ul>
+                <li>✅ الإيجابيات: سرعة فائقة، دقة تسديد عالية.</li>
+                <li>⚠️ السلبيات: قلة المساندة الدفاعية.</li>
+                <li>🏆 الأفضل: فينيسيوس يتفوق في المراوغات.</li>
+            </ul>`;
+    }
 </script>
 </body>
 </html>
