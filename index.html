@@ -2,70 +2,67 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bernabéu Pulse | المنصة الملكية المتكاملة</title>
+    <title>Bernabéu Pulse</title>
     <style>
-        :root { --gold: #cca43b; --blue: #111827; --white: #ffffff; }
-        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { margin: 0; background: #f4f4f4; }
-        
-        /* الرأس والقائمة */
+        :root { --gold: #cca43b; --blue: #111827; }
+        body { font-family: 'Segoe UI', sans-serif; background: #f9f9f9; margin: 0; transition: 0.3s; }
         header { background: var(--blue); color: var(--gold); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); }
         .sidebar { position: fixed; right: -300px; top: 0; width: 300px; height: 100%; background: var(--blue); transition: 0.3s; padding-top: 60px; z-index: 1000; }
         .sidebar.active { right: 0; }
         .sidebar a { display: block; color: white; padding: 20px; text-decoration: none; border-bottom: 1px solid #222; }
-        
-        /* إطار عرض الأخبار والمباريات */
-        .content-frame { width: 100%; height: 90vh; border: none; background: white; }
-        .page { display: none; }
-        .active { display: block; }
+        .news-item { background: white; margin: 15px auto; max-width: 800px; padding: 20px; border-radius: 10px; border-right: 5px solid var(--gold); box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .lang-btn { background: var(--gold); color: white; border: none; padding: 5px 15px; cursor: pointer; border-radius: 5px; }
     </style>
 </head>
 <body>
 
 <header>
-    <div style="font-size:22px; font-weight:bold;">Bernabéu <span style="color:white">Pulse</span></div>
-    <div onclick="document.querySelector('.sidebar').classList.toggle('active')" style="cursor:pointer; font-size:25px;">☰</div>
+    <div style="font-size:22px; font-weight:bold;">Bernabéu Pulse</div>
+    <div style="display:flex; gap:10px; align-items:center;">
+        <button class="lang-btn" onclick="toggleLang()">EN / AR</button>
+        <div onclick="document.querySelector('.sidebar').classList.toggle('active')" style="cursor:pointer; font-size:25px;">☰</div>
+    </div>
 </header>
 
 <div class="sidebar">
-    <a href="#" onclick="showPage('home')">🏠 الرئيسية</a>
-    <a href="#" onclick="showPage('news')">📰 الأخبار والانتقالات</a>
-    <a href="#" onclick="showPage('matches')">⚽ المباريات والتشكيلات</a>
-    <a href="#" onclick="showPage('legends')">✨ أساطير الملكي</a>
+    <a href="#" class="i18n" data-ar="🏠 الرئيسية" data-en="🏠 Home">🏠 الرئيسية</a>
+    <a href="#" class="i18n" data-ar="📰 آخر الأخبار" data-en="📰 Latest News">📰 آخر الأخبار</a>
+    <a href="#" class="i18n" data-ar="👥 اللاعبين والأساطير" data-en="👥 Players & Legends">👥 اللاعبين والأساطير</a>
 </div>
 
-<!-- الصفحات -->
-<div id="home" class="page active" style="padding:20px;">
-    <h1>مرحباً بك في نبض البرنابيو</h1>
-    <p>تابع آخر أخبار ريال مدريد، التشكيلات، وتاريخ الأساطير.</p>
-</div>
-
-<!-- صفحة الأخبار (عرض المصدر الأصلي لضمان الحقوق) -->
-<div id="news" class="page">
-    <iframe src="https://www.365scores.com/ar/football/team/real-madrid-131/news" class="content-frame"></iframe>
-</div>
-
-<!-- صفحة المباريات -->
-<div id="matches" class="page">
-    <iframe src="https://www.365scores.com/ar/football/team/real-madrid-131/matches" class="content-frame"></iframe>
-</div>
-
-<!-- صفحة الأساطير (محتوى خاص بك) -->
-<div id="legends" class="page" style="padding:20px;">
-    <h1>أساطير الملكي</h1>
-    <div id="legends-grid">
-        <!-- يمكنك إضافة الأساطير هنا -->
-        <div class="card"><h3>زين الدين زيدان</h3><p>المايسترو الذي كتب التاريخ.</p></div>
-    </div>
-</div>
+<h1 style="text-align:center;" class="i18n" data-ar="الأخبار والانتقالات الملكية" data-en="Real Madrid News & Transfers">الأخبار والانتقالات الملكية</h1>
+<div id="news-feed"></div>
 
 <script>
-    function showPage(pageId) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(pageId).classList.add('active');
-        document.querySelector('.sidebar').classList.remove('active');
+    // نظام الترجمة
+    function toggleLang() {
+        const html = document.documentElement;
+        const currentLang = html.lang === 'ar' ? 'en' : 'ar';
+        html.lang = currentLang;
+        html.dir = currentLang === 'ar' ? 'rtl' : 'ltr';
+        
+        document.querySelectorAll('.i18n').forEach(el => {
+            el.innerText = el.getAttribute('data-' + currentLang);
+        });
     }
+
+    // جلب الأخبار
+    const rssUrl = "https://api.rss2json.com/v1/api.json?rss_url=https://www.365scores.com/ar/football/team/real-madrid-131/news/feed";
+
+    fetch(rssUrl)
+        .then(res => res.json())
+        .then(data => {
+            const feed = document.getElementById('news-feed');
+            data.items.slice(0, 5).forEach(item => {
+                feed.innerHTML += `
+                    <div class="news-item">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        <a href="${item.link}" target="_blank" style="color:var(--gold);">Read More / اقرأ المزيد</a>
+                    </div>
+                `;
+            });
+        });
 </script>
 </body>
 </html>
