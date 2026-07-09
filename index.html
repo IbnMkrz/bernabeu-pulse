@@ -2,82 +2,70 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>Bernabéu Pulse | المنصة الملكية</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bernabéu Pulse | المنصة الملكية المتكاملة</title>
     <style>
         :root { --gold: #cca43b; --blue: #111827; --white: #ffffff; }
-        body { margin: 0; background: #f4f4f4; font-family: 'Segoe UI', sans-serif; }
+        * { box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { margin: 0; background: #f4f4f4; }
         
-        /* القائمة الجانبية */
-        .sidebar { position: fixed; right: -300px; top: 0; width: 300px; height: 100%; background: var(--blue); color: white; transition: 0.3s; padding: 20px; z-index: 1000; }
+        /* الرأس والقائمة */
+        header { background: var(--blue); color: var(--gold); padding: 15px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid var(--gold); }
+        .sidebar { position: fixed; right: -300px; top: 0; width: 300px; height: 100%; background: var(--blue); transition: 0.3s; padding-top: 60px; z-index: 1000; }
         .sidebar.active { right: 0; }
-        .sidebar a { display: block; color: white; padding: 15px; text-decoration: none; border-bottom: 1px solid #222; }
-
-        /* المحتوى */
-        .container { padding: 20px; }
-        .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { background: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .btn-comp { background: var(--gold); color: white; border: none; padding: 10px; width: 100%; cursor: pointer; border-radius: 5px; }
+        .sidebar a { display: block; color: white; padding: 20px; text-decoration: none; border-bottom: 1px solid #222; }
+        
+        /* إطار عرض الأخبار والمباريات */
+        .content-frame { width: 100%; height: 90vh; border: none; background: white; }
+        .page { display: none; }
+        .active { display: block; }
     </style>
 </head>
 <body>
 
-<header style="background:var(--blue); color:white; padding:15px; display:flex; justify-content:space-between;">
-    <div style="font-size:24px; font-weight:bold;">Bernabéu <span style="color:var(--gold)">Pulse</span></div>
+<header>
+    <div style="font-size:22px; font-weight:bold;">Bernabéu <span style="color:white">Pulse</span></div>
     <div onclick="document.querySelector('.sidebar').classList.toggle('active')" style="cursor:pointer; font-size:25px;">☰</div>
 </header>
 
 <div class="sidebar">
-    <h2 style="color:var(--gold)">القائمة الرئيسية</h2>
-    <a href="#" onclick="renderNews()">📰 آخر الأخبار</a>
-    <a href="#" onclick="renderPlayers()">👥 اللاعبين والأساطير</a>
-    <a href="#" onclick="renderCompare()">📊 المقارنة الذكية</a>
+    <a href="#" onclick="showPage('home')">🏠 الرئيسية</a>
+    <a href="#" onclick="showPage('news')">📰 الأخبار والانتقالات</a>
+    <a href="#" onclick="showPage('matches')">⚽ المباريات والتشكيلات</a>
+    <a href="#" onclick="showPage('legends')">✨ أساطير الملكي</a>
 </div>
 
-<div class="container" id="mainContent">
-    <!-- هنا يظهر المحتوى ديناميكياً -->
+<!-- الصفحات -->
+<div id="home" class="page active" style="padding:20px;">
+    <h1>مرحباً بك في نبض البرنابيو</h1>
+    <p>تابع آخر أخبار ريال مدريد، التشكيلات، وتاريخ الأساطير.</p>
+</div>
+
+<!-- صفحة الأخبار (عرض المصدر الأصلي لضمان الحقوق) -->
+<div id="news" class="page">
+    <iframe src="https://www.365scores.com/ar/football/team/real-madrid-131/news" class="content-frame"></iframe>
+</div>
+
+<!-- صفحة المباريات -->
+<div id="matches" class="page">
+    <iframe src="https://www.365scores.com/ar/football/team/real-madrid-131/matches" class="content-frame"></iframe>
+</div>
+
+<!-- صفحة الأساطير (محتوى خاص بك) -->
+<div id="legends" class="page" style="padding:20px;">
+    <h1>أساطير الملكي</h1>
+    <div id="legends-grid">
+        <!-- يمكنك إضافة الأساطير هنا -->
+        <div class="card"><h3>زين الدين زيدان</h3><p>المايسترو الذي كتب التاريخ.</p></div>
+    </div>
 </div>
 
 <script>
-    // قاعدة بيانات وهمية (يمكن ربطها بقاعدة بيانات حقيقية لاحقاً)
-    const playersData = [
-        { name: "فينيسيوس جونيور", pos: "هجوم", strengths: ["السرعة", "المراوغة"], weaknesses: ["التسرع"], img: "⚡" },
-        { name: "كيليان مبابي", pos: "هجوم", strengths: ["الإنهاء", "التمركز"], weaknesses: ["اللعب الدفاعي"], img: "👑" },
-        { name: "زين الدين زيدان", pos: "أسطورة", strengths: ["الرؤية", "الكنترول"], weaknesses: ["السرعة البدنية"], img: "🌟" }
-    ];
-
-    function renderPlayers() {
-        const content = document.getElementById('mainContent');
-        content.innerHTML = "<h1>قائمة الأساطير واللاعبين</h1><div class='news-grid' id='grid'></div>";
-        const grid = document.getElementById('grid');
-        playersData.forEach(p => {
-            grid.innerHTML += `<div class='card'><h2>${p.img} ${p.name}</h2><p>المركز: ${p.pos}</p></div>`;
-        });
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        document.querySelector('.sidebar').classList.remove('active');
     }
-
-    function renderCompare() {
-        const content = document.getElementById('mainContent');
-        content.innerHTML = `<h1>المقارنة الذكية</h1>
-            <select id="p1">${playersData.map(p => `<option>${p.name}</option>`)}</select>
-            <select id="p2">${playersData.map(p => `<option>${p.name}</option>`)}</select>
-            <button class="btn-comp" onclick="showResult()">قارن الآن</button>
-            <div id="result" style="margin-top:20px;"></div>`;
-    }
-
-    function showResult() {
-        document.getElementById('result').innerHTML = `
-            <div class="card">
-                <h3>تحليل احترافي</h3>
-                <p>✅ نقاط القوة: الأداء الهجومي للطرفين ممتاز.</p>
-                <p>⚠️ نقاط الضعف: يحتاجان لمساندة أكبر في وسط الملعب.</p>
-            </div>`;
-    }
-
-    // عرض الأخبار عند التحميل
-    function renderNews() {
-        document.getElementById('mainContent').innerHTML = "<h1>أخبار النادي العاجلة</h1><div class='news-grid'>... (تحميل الآلاف من الأخبار) ...</div>";
-    }
-
-    renderNews();
 </script>
 </body>
 </html>
