@@ -2,250 +2,80 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Bernabéu Pulse | نبض البرنابيو</title>
+    <title>نبض مدريد - المنصة الملكية</title>
     <style>
-        :root {
-            --primary-gold: #cca43b;
-            --madrid-blue: #111827;
-            --pure-white: #ffffff;
-            --light-gray: #f3f4f6;
-            --text-dark: #1f2937;
-        }
- 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            -webkit-tap-highlight-color: transparent;
-        }
- 
-        body {
-            background-color: var(--light-gray);
-            color: var(--text-dark);
-            overflow-x: hidden;
-        }
- 
-        /* رأس الصفحة - يشبه واجهة التطبيق الهجينة */
-        header {
-            background-color: var(--madrid-blue);
-            color: var(--pure-white);
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 3px solid var(--primary-gold);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
- 
-        .logo { font-size: 20px; font-weight: bold; }
-        .logo span { color: var(--primary-gold); }
- 
-        .menu-btn { font-size: 26px; cursor: pointer; color: var(--primary-gold); }
- 
-        /* القائمة الجانبية (3 شرطات) المُرتبة حسب طلبك */
-        .sidebar {
-            position: fixed;
-            top: 0;
-            right: -280px;
-            width: 280px;
-            height: 100%;
-            background-color: var(--madrid-blue);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding-top: 60px;
-            z-index: 999;
-            box-shadow: -5px 0 15px rgba(0,0,0,0.5);
-        }
- 
-        .sidebar a {
-            padding: 18px 25px;
-            text-decoration: none;
-            font-size: 15px;
-            color: var(--pure-white);
-            display: block;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
- 
-        .sidebar a:hover {
-            background-color: var(--primary-gold);
-            color: var(--madrid-blue);
-            font-weight: bold;
-        }
- 
-        .close-btn { position: absolute; top: 15px; left: 20px; font-size: 24px; color: var(--pure-white); cursor: pointer; }
- 
-        /* قسم المباراة القادمة والتذاكر */
-        .match-section {
-            padding: 15px;
-        }
- 
-        .next-match-card {
-            background: linear-gradient(135deg, #111827 0%, #1e293b 100%);
-            color: white;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border: 1px solid var(--primary-gold);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        }
- 
-        .match-teams {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            font-size: 18px;
-            font-weight: bold;
-            margin: 15px 0;
-        }
- 
-        .vs { color: var(--primary-gold); font-style: italic; font-size: 20px; }
- 
-        .countdown {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin: 15px 0;
-        }
- 
-        .time-box {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 8px 12px;
-            border-radius: 8px;
-            border-bottom: 2px solid var(--primary-gold);
-            min-width: 65px;
-        }
- 
-        .time-box span { display: block; font-size: 18px; font-weight: bold; }
-        .time-box label { font-size: 11px; color: #9ca3af; }
- 
-        .tickets-btn {
-            display: inline-block;
-            background-color: var(--primary-gold);
-            color: var(--madrid-blue);
-            padding: 12px 20px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: bold;
-            margin-top: 10px;
-            width: 100%;
-            transition: 0.2s;
-        }
- 
-        /* هيكلة قسم الأخبار الذكية */
-        .news-section { padding: 15px; }
-        .section-title { font-size: 18px; margin-bottom: 15px; border-right: 4px solid var(--primary-gold); padding-right: 8px; color: var(--madrid-blue); }
- 
-        .news-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 15px;
-        }
- 
-        .news-img { width: 100%; height: 160px; background: linear-gradient(45deg, #111827, #1e293b); display: flex; align-items: center; justify-content: center; color: var(--primary-gold); font-weight: bold; }
-        .news-content { padding: 15px; }
-        .news-tag { background-color: rgba(204, 164, 59, 0.15); color: #92721a; padding: 2px 6px; border-radius: 4px; font-size: 11px; display: inline-block; margin-bottom: 8px; font-weight: bold; }
-        .news-title { font-size: 15px; font-weight: bold; margin-bottom: 5px; color: var(--madrid-blue); }
-        .news-desc { font-size: 12px; color: #4b5563; line-height: 1.4; }
- 
-        .lang-btn { background: none; border: 1px solid var(--primary-gold); color: var(--primary-gold); padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f0f0; margin: 0; }
+        header { background: #00529f; color: #fecb00; padding: 20px; text-align: center; font-weight: bold; }
+        .match-box { background: #fff; margin: 20px; padding: 20px; border-radius: 15px; border-right: 5px solid #00529f; }
+        .analysis { font-style: italic; color: #333; margin-top: 15px; border-top: 1px solid #ccc; padding-top: 10px; }
+        .sidebar { height: 100%; width: 0; position: fixed; top: 0; right: 0; background: #003366; transition: 0.5s; padding-top: 60px; z-index: 10; }
+        .sidebar a { padding: 15px; display: block; color: white; text-decoration: none; }
+        .page { display: none; padding: 20px; }
+        .active { display: block; }
     </style>
 </head>
 <body>
- 
-    <header>
-        <div class="logo">Bernabéu<span>Pulse</span></div>
-        <div style="display: flex; align-items: center; gap: 12px;">
-            <button class="lang-btn" onclick="toggleLang()">EN</button>
-            <div class="menu-btn" onclick="openMenu()">☰</div>
-        </div>
-    </header>
- 
-    <!-- القائمة الجانبية المُرتبة بالملّي -->
-    <div id="appSidebar" class="sidebar">
-        <div class="close-btn" onclick="closeMenu()">✕</div>
-        <a href="#" id="m1">📅 المباريات (السابقة والقادمة)</a>
-        <a href="#" id="m2">🏆 البطولات</a>
-        <a href="#" id="m3">👥 عروق الفريق (اللاعبين)</a>
-        <a href="#" id="m4">📊 مركز المقارنة المتطور</a>
-        <a href="#" id="m5">✨ اللاعبين الأساطير العظماء</a>
-    </div>
- 
-    <!-- واجهة البداية: العد التنازلي وحجز التذاكر الرسمي -->
-    <section class="match-section">
-        <div class="next-match-card">
-            <div style="font-size: 11px; color: var(--primary-gold); font-weight: bold; margin-bottom: 5px;" id="m-title">المباراة القادمة</div>
-            <div class="match-teams">
-                <div>ريال مدريد</div>
-                <div class="vs">VS</div>
-                <div id="opp">أتلتيكو مدريد</div>
-            </div>
-            <div class="countdown">
-                <div class="time-box"><span id="d">02</span><label id="l-d">أيام</label></div>
-                <div class="time-box"><span id="h">14</span><label id="l-h">ساعة</label></div>
-                <div class="time-box"><span id="m">35</span><label id="l-m">دقيقة</label></div>
-            </div>
-            <div style="font-size: 12px; color: #d1d5db; margin-bottom: 10px;" id="m-chan">📺 القنوات الناقلة: beIN Sports 1 HD</div>
-            <a href="https://www.realmadrid.com/en-US/tickets" target="_blank" class="tickets-btn" id="m-tick">🎟️ احجز تذكرتك الرسمية الآن</a>
-        </div>
-    </section>
- 
-    <!-- قسم الأخبار الذكية والعاجلة -->
-    <section class="news-section">
-        <h2 class="section-title" id="n-title">آخر نبض البرنابيو</h2>
- 
-        <div class="news-card">
-            <div class="news-img">Hala Madrid 👑</div>
-            <div class="news-content">
-                <span class="news-tag" id="t-1">عاجل</span>
-                <h3 class="news-title" id="ti-1">تجهيزات مكثفة في الفالديبيباس للقمة القادمة</h3>
-                <p class="news-desc" id="de-1">الفريق يواصل تدريباته الصباحية بتركيز كامل لضمان النقاط الثلاث واستمرار الصدارة الملكية.</p>
-            </div>
-        </div>
-    </section>
- 
-    <script>
-        function openMenu() { document.getElementById("appSidebar").style.right = "0"; }
-        function closeMenu() { document.getElementById("appSidebar").style.right = "-280px"; }
- 
-        let currentLang = 'ar';
-        function toggleLang() {
-            const html = document.documentElement;
-            if(currentLang === 'ar') {
-                html.setAttribute('lang', 'en'); html.setAttribute('dir', 'ltr');
-                document.getElementById('appSidebar').style.left = "-280px"; document.getElementById('appSidebar').style.right = "auto";
-                document.getElementById('m1').innerText = "📅 Matches (Past / Upcoming)";
-                document.getElementById('m2').innerText = "🏆 Tournaments";
-                document.getElementById('m3').innerText = "👥 Squad & Players";
-                document.getElementById('m4').innerText = "📊 Comparison Hub";
-                document.getElementById('m5').innerText = "✨ All-Time Legends";
-                document.getElementById('m-title').innerText = "UPCOMING MATCH";
-                document.getElementById('opp').innerText = "Atletico Madrid";
-                document.getElementById('l-d').innerText = "Days"; document.getElementById('l-h').innerText = "Hours"; document.getElementById('l-m').innerText = "Mins";
-                document.getElementById('m-chan').innerText = "📺 Broadcasters: beIN Sports 1 HD";
-                document.getElementById('m-tick').innerText = "🎟️ Get Official Tickets";
-                document.getElementById('n-title').innerText = "Bernabéu Pulse News";
-                currentLang = 'en';
-            } else {
-                html.setAttribute('lang', 'ar'); html.setAttribute('dir', 'rtl');
-                document.getElementById('appSidebar').style.right = "-280px"; document.getElementById('appSidebar').style.left = "auto";
-                document.getElementById('m1').innerText = "📅 المباريات (السابقة والقادمة)";
-                document.getElementById('m2').innerText = "🏆 البطولات";
-                document.getElementById('m3').innerText = "👥 عروق الفريق (اللاعبين)";
-                document.getElementById('m4').innerText = "📊 مركز المقارنة المتطور";
-                document.getElementById('m5').innerText = "✨ اللاعبين الأساطير العظماء";
-                document.getElementById('m-title').innerText = "المباراة القادمة";
-                document.getElementById('opp').innerText = "أتلتيكو مدريد";
-                document.getElementById('l-d').innerText = "أيام"; document.getElementById('l-h').innerText = "ساعة"; document.getElementById('l-m').innerText = "دقيقة";
-                document.getElementById('m-tick').innerText = "🎟️ احجز تذكرتك الرسمية الآن";
-                document.getElementById('n-title').innerText = "آخر نبض البرنابيو";
-                currentLang = 'ar';
-            }
+
+<header onclick="toggleNav()">☰ القائمة الملكية</header>
+
+<div id="mySidebar" class="sidebar">
+    <a href="#" onclick="showPage('home')">الرئيسية</a>
+    <a href="#" onclick="showPage('analysis')">تحليل وفلسفة</a>
+</div>
+
+<div id="home" class="page active">
+    <div id="match-content" class="match-box"></div>
+</div>
+
+<div id="analysis" class="page">
+    <h2>فلسفة الملكي</h2>
+    <p>ريال مدريد ليس مجرد نادٍ، إنه عقيدة كروية تؤمن بأن المستحيل مجرد كلمة في قاموس الضعفاء.</p>
+</div>
+
+<script>
+    // قاعدة بيانات المباراة (يمكنك تحديثها يدوياً بسهولة)
+    const nextMatch = {
+        exists: true,
+        opponent: "برشلونة",
+        time: "15 يوليو 2026 - 10:00 مساءً",
+        channel: "beIN Sports HD1",
+        predictedLineup: "كورتوا، كارفاخال، ميليتاو، روديغر، ميندي، تشواميني، فالفيردي، بيلينجهام، فينيسيوس، مبابي، رودريغو",
+        weaknesses: "التقدم المبالغ فيه للأظهرة الذي يترك مساحات خلفية.",
+        prediction: "فوز الريال 2-1 بفضل روح العودة في الدقائق الأخيرة.",
+        reason: "الذكاء الاصطناعي يرى أن شخصية ريال مدريد في الأوقات الحرجة تتفوق على أي تنظيم تكتيكي للخصم."
+    };
+
+    function loadMatch() {
+        const div = document.getElementById('match-content');
+        if (!nextMatch.exists) {
+            div.innerHTML = "<h3>لا توجد مباراة قادمة حالياً.</h3>";
+        } else {
+            div.innerHTML = `
+                <h3>المباراة القادمة: ريال مدريد vs ${nextMatch.opponent}</h3>
+                <p><b>الموعد:</b> ${nextMatch.time}</p>
+                <p><b>القنوات الناقلة:</b> ${nextMatch.channel}</p>
+                <p><b>التشكيلة المتوقعة:</b> ${nextMatch.predictedLineup}</p>
+                <div class="analysis">
+                    <p><b>تحليل الذكاء الاصطناعي:</b> ${nextMatch.reason}</p>
+                    <p><b>سلبيات الخصم:</b> ${nextMatch.weaknesses}</p>
+                    <p><b>النتيجة المتوقعة:</b> ${nextMatch.prediction}</p>
+                </div>
+            `;
         }
-    </script>
+    }
+
+    function toggleNav() {
+        let side = document.getElementById("mySidebar");
+        side.style.width = side.style.width === "250px" ? "0" : "250px";
+    }
+
+    function showPage(pageId) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(pageId).classList.add('active');
+        toggleNav();
+    }
+
+    loadMatch();
+</script>
 </body>
 </html>
