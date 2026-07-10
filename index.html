@@ -5,25 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حلوين عشيرة</title>
     <style>
-        body { text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); min-height: 100vh; }
+        body { text-align: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); min-height: 100vh; }
         h1 { color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        p { color: #fff; font-size: 1.2rem; margin-bottom: 30px; }
-        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: transform 0.3s; }
-        img { width: 100%; height: auto; border-radius: 15px; display: block; transition: opacity 0.5s ease-in-out; }
-        button { padding: 15px 40px; font-size: 20px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 50px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        img { width: 100%; height: auto; border-radius: 15px; display: block; transition: opacity 0.3s ease-in-out; }
+        .controls { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 20px; transition: 0.3s; }
         button:hover { background-color: #000; transform: scale(1.05); }
+        .random-btn { padding: 15px 40px; font-size: 18px; margin-top: 15px; background-color: #ff6b6b; }
     </style>
 </head>
 <body>
 
     <h1>حلوين عشيرة</h1>
-    <p>اضغط على الزر لرؤية أجمل ما خلق الله</p>
-    
     <div id="image-container">
         <img id="random-img" src="https://i.ibb.co/pt86zfd/1.jpg" alt="صورة">
     </div>
 
-    <button onclick="changeImage()">شاهد الجمال</button>
+    <div class="controls">
+        <button onclick="changeImage(-1)">السابق</button>
+        <button onclick="changeImage(1)">التالي</button>
+    </div>
+    
+    <button class="random-btn" onclick="randomImage()">صورة عشوائية</button>
 
     <script>
         const images = [
@@ -38,15 +42,28 @@
             "https://i.ibb.co/4wywkT1b/9.jpg",
             "https://i.ibb.co/ksVBHjt5/10.jpg"
         ];
+        
+        let currentIndex = 0;
 
-        function changeImage() {
+        function updateImage() {
             const img = document.getElementById('random-img');
             img.style.opacity = 0;
             setTimeout(() => {
-                const randomIdx = Math.floor(Math.random() * images.length);
-                img.src = images[randomIdx];
+                img.src = images[currentIndex];
                 img.style.opacity = 1;
-            }, 300);
+            }, 200);
+        }
+
+        function changeImage(direction) {
+            currentIndex += direction;
+            if (currentIndex < 0) currentIndex = images.length - 1;
+            if (currentIndex >= images.length) currentIndex = 0;
+            updateImage();
+        }
+
+        function randomImage() {
+            currentIndex = Math.floor(Math.random() * images.length);
+            updateImage();
         }
     </script>
 </body>
