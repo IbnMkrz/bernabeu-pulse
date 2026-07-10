@@ -2,12 +2,16 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حلوين عشيرة</title>
     <style>
-        body { text-align: center; font-family: sans-serif; background: linear-gradient(135deg, #f6d365, #fda085); min-height: 100vh; padding: 20px; }
-        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        img { width: 100%; height: auto; border-radius: 15px; transition: opacity 0.5s; }
-        button { padding: 15px 40px; font-size: 20px; cursor: pointer; background: #333; color: white; border: none; border-radius: 50px; margin-top: 20px; }
+        body { text-align: center; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); min-height: 100vh; }
+        h1 { color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+        p { color: #fff; font-size: 1.2rem; margin-bottom: 30px; }
+        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); transition: transform 0.3s; }
+        img { width: 100%; height: auto; border-radius: 15px; display: block; transition: opacity 0.5s ease-in-out; }
+        button { padding: 15px 40px; font-size: 20px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 50px; transition: 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
+        button:hover { background-color: #000; transform: scale(1.05); }
     </style>
 </head>
 <body>
@@ -16,20 +20,31 @@
     <p>اضغط على الزر لرؤية أجمل ما خلق الله</p>
     
     <div id="image-container">
-        <img id="random-img" src="1.png" alt="صورة">
+        <img id="random-img" src="https://i.ibb.co/pt86zfd/1.jpg" alt="صورة">
     </div>
 
     <button onclick="changeImage()">شاهد الجمال</button>
 
     <script>
+        const images = [
+            "https://i.ibb.co/pt86zfd/1.jpg",
+            "https://i.ibb.co/4wKWZnZw/2.jpg",
+            "https://i.ibb.co/ZRyJstjn/3.jpg",
+            "https://i.ibb.co/N6DP9KkM/4.jpg",
+            "https://i.ibb.co/C5rNxzN5/5.jpg",
+            "https://i.ibb.co/FkF9QQn1/6.jpg",
+            "https://i.ibb.co/F4kRc7Hx/7.jpg",
+            "https://i.ibb.co/BVmBSYYj/8.jpg",
+            "https://i.ibb.co/4wywkT1b/9.jpg",
+            "https://i.ibb.co/ksVBHjt5/10.jpg"
+        ];
+
         function changeImage() {
             const img = document.getElementById('random-img');
-            // اختيار رقم من 1 إلى 10
-            const randomNum = Math.floor(Math.random() * 10) + 1;
-            // تحميل الصورة بناءً على الاسم المباشر
             img.style.opacity = 0;
             setTimeout(() => {
-                img.src = randomNum + ".png";
+                const randomIdx = Math.floor(Math.random() * images.length);
+                img.src = images[randomIdx];
                 img.style.opacity = 1;
             }, 300);
         }
