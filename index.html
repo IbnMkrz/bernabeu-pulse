@@ -1,68 +1,18 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <title>يوميات غنومي | الموقع الرسمي</title>
-    <style>
-        :root { --gold: #cca43b; --bg: #1a1a1a; --text: #ffffff; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); text-align: center; }
-        .page { display: none; padding: 20px; }
-        .active { display: block; }
-        .card { background: #2a2a2a; padding: 20px; margin: 20px auto; max-width: 500px; border-radius: 15px; border-right: 5px solid var(--gold); }
-        .btn { background: var(--gold); border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; color: #000; font-weight: bold; }
-        .profile-img { width: 200px; height: 200px; border-radius: 50%; border: 4px solid var(--gold); }
-    </style>
-</head>
-<body>
-
-<header style="padding:20px; background:#000;">
-    <h1>يوميات غنومي</h1>
-    <nav>
-        <button onclick="showPage('home')">الرئيسية</button>
-        <button onclick="showPage('jokes')">الذبات</button>
-        <button onclick="showPage('game')">لعبة التصوير</button>
-    </nav>
-</header>
-
-<!-- الصفحة الرئيسية -->
-<div id="home" class="page active">
-    <img src="image.png" class="profile-img" alt="غنومي">
-    <h2>أنا غنام.. سيد الحارة</h2>
-    <div class="card">
-        <p>السلام عليكم، اسمي غنام. ولدت وفي بطني "فلوس" بدلاً من الحليب.. وأطمح في مرسيدس من سيدي ولي العهد.</p>
-    </div>
-</div>
-
-<!-- صفحة الذبات -->
-<div id="jokes" class="page">
-    <h2>ذبات غنومي الحصرية</h2>
-    <div class="card"><p>كنت أمشي بالحارة، وفجأة الأرض قررت تسلم عليّ بقوة.. الجدار سألني: أنت بخير ولا نغير الديكور؟</p></div>
-    <div class="card"><p>قررت أصير جدي ولبست ثوب أبوي، مشيت 5 خطوات.. طحت في بركة موية وصرت "غنام الغواص".</p></div>
-    <div class="card"><p>مرة دخلت مطعم فخم، قلت لهم عطوني "وجبة التواضع"، جابوا لي حساب بـ 500 ريال.. تواضعت وطلعت أكلت فول!</p></div>
-</div>
-
-<!-- صفحة اللعبة -->
+<!-- صفحة اللعبة المحدثة -->
 <div id="game" class="page">
     <h2>لعبة "صور وجهك"</h2>
+    <p>اضغط الزر وشوف وجهك الحقيقي!</p>
     <button class="btn" onclick="takePhoto()">صورني</button>
     <div id="result" style="margin-top:20px;"></div>
 </div>
 
 <script>
-    function showPage(id) {
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
     function takePhoto() {
-        // محاكاة التصوير
+        // سيقوم الكود الآن بعرض صورتك المخصصة (image_2.png)
         document.getElementById('result').innerHTML = `
             <h3>طلعت صورتك!</h3>
-            <img src="https://img.freepik.com/free-photo/funny-donkey-face_1203-847.jpg" style="width:200px; border-radius:10px;">
-            <p>هههههه! طلعت حمار!</p>
+            <img src="image_2.png" style="width:250px; border-radius:15px; border: 3px solid var(--gold);">
+            <p style="margin-top:10px; font-weight:bold; color:var(--gold);">هههههه! طالع نسخة طبق الأصل!</p>
         `;
     }
 </script>
-
-</body>
-</html>
