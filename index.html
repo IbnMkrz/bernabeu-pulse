@@ -2,91 +2,33 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>حيوانات عشيرة | المتجر الرسمي</title>
+    <title>حيوانات عشيرة</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; margin: 0; }
-        header { background-color: #1a252f; color: white; padding: 20px; text-align: center; }
-        .nav { background: #fff; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
-        .card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
-        .price { color: #c0392b; font-weight: bold; font-size: 1.2rem; }
-        button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
-        #cart { background: #fff; padding: 20px; margin: 20px; border-radius: 10px; border: 2px solid #1a252f; }
+        body { font-family: sans-serif; background: #f4f4f4; text-align: center; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 20px; }
+        .card { background: white; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
+        .card img { width: 100%; height: 150px; object-fit: cover; }
+        .price { color: red; font-weight: bold; }
+        button { background: #27ae60; border: none; color: white; padding: 8px; width: 100%; cursor: pointer; }
     </style>
 </head>
 <body>
 
-<header><h1>حيوانات عشيرة</h1></header>
+<h1>حيوانات عشيرة</h1>
 
-<div class="nav">
-    <button onclick="filter('all')">الكل</button>
-    <button onclick="filter('special')">مميز (1 ريال)</button>
-    <button onclick="filter('regular')">متوفر (300-400 ريال)</button>
-    <button onclick="sortItems()">فرز حسب السعر</button>
-    <button onclick="document.getElementById('cart').scrollIntoView()">🛒 السلة</button>
-</div>
-
-<div class="container" id="grid">
-    <div class="card" data-price="1" data-type="special">
-        <img src="https://ibb.co/fYgTNcys" alt="منتج خاص">
-        <h3>طائر خاص 1</h3>
-        <p class="price">1 ريال</p>
-        <button onclick="add('طائر خاص 1', 1)">إضافة</button>
+<div class="grid">
+    <div class="card">
+        <img src="https://i.ibb.co/fYgTNcys/bird1.jpg" alt="صورة">
+        <p>السعر: 1 ريال</p>
+        <button onclick="alert('تمت الإضافة')">إضافة</button>
     </div>
-    <div class="card" data-price="1" data-type="special">
-        <img src="https://ibb.co/fzPs3dyQ" alt="منتج خاص">
-        <h3>طائر خاص 2</h3>
-        <p class="price">1 ريال</p>
-        <button onclick="add('طائر خاص 2', 1)">إضافة</button>
-    </div>
-    <div class="card" data-price="1" data-type="special">
-        <img src="https://ibb.co/PG8WygTk" alt="منتج خاص">
-        <h3>طائر خاص 3</h3>
-        <p class="price">1 ريال</p>
-        <button onclick="add('طائر خاص 3', 1)">إضافة</button>
-    </div>
-
-    <div class="card" data-price="350" data-type="regular">
-        <img src="https://ibb.co/jv22Cg2p" alt="مفترس">
-        <h3>مفترس مميز</h3>
-        <p class="price">350 ريال</p>
-        <button onclick="add('مفترس مميز', 350)">إضافة</button>
-    </div>
-    <div class="card" data-price="320" data-type="regular">
-        <img src="https://ibb.co/0pnT2d0Y" alt="أليف">
-        <h3>حيوان أليف فاخر</h3>
-        <p class="price">320 ريال</p>
-        <button onclick="add('حيوان أليف فاخر', 320)">إضافة</button>
+    
+    <div class="card">
+        <img src="https://i.ibb.co/jv22Cg2p/pred1.jpg" alt="صورة">
+        <p>السعر: 350 ريال</p>
+        <button onclick="alert('تمت الإضافة')">إضافة</button>
     </div>
 </div>
-
-<div id="cart">
-    <h2>سلة المشتريات</h2>
-    <ul id="cart-list"></ul>
-    <h3>الإجمالي: <span id="total">0</span> ريال</h3>
-</div>
-
-<script>
-    function add(name, price) {
-        document.getElementById('cart-list').innerHTML += `<li>${name} - ${price} ريال</li>`;
-        let total = parseInt(document.getElementById('total').innerText) + price;
-        document.getElementById('total').innerText = total;
-    }
-
-    function filter(type) {
-        document.querySelectorAll('.card').forEach(c => {
-            c.style.display = (type === 'all' || c.dataset.type === type) ? 'block' : 'none';
-        });
-    }
-
-    function sortItems() {
-        const grid = document.getElementById('grid');
-        const cards = Array.from(document.querySelectorAll('.card'));
-        cards.sort((a, b) => a.dataset.price - b.dataset.price);
-        cards.forEach(c => grid.appendChild(c));
-    }
-</script>
 
 </body>
 </html>
