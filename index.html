@@ -4,43 +4,73 @@
     <meta charset="UTF-8">
     <title>حيوانات عشيرة | الموقع الرسمي</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: #f4f4f4; color: #333; }
-        header { background-color: #2c3e50; color: white; padding: 2rem; text-align: center; }
-        .container { max-width: 1100px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px; }
-        .animal-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
-        .animal-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; background-color: #ddd; }
-        .animal-card h3 { margin: 10px 0; color: #2c3e50; }
-        .status { font-weight: bold; color: #27ae60; }
-        footer { text-align: center; padding: 2rem; color: #777; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f4f4; margin: 0; }
+        header { background-color: #1a252f; color: white; padding: 2rem; text-align: center; }
+        .nav { text-align: center; padding: 20px; background: #ddd; }
+        .container { max-width: 1200px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 20px; }
+        .animal-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
+        .animal-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
+        .price { color: #c0392b; font-weight: bold; font-size: 1.2rem; }
+        #cart { background: #fff; padding: 20px; margin: 2rem auto; max-width: 800px; border: 2px solid #1a252f; border-radius: 10px; }
+        button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>موقع حيوانات عشيرة الرسمي</h1>
-    <p>الجودة، الأمانة، والتميز في عالم الحيوان</p>
+    <h1>حيوانات عشيرة</h1>
 </header>
 
-<div class="container">
-    <!-- يمكنك تكرار هذا القسم لكل حيوان -->
-    <div class="animal-card">
-        <img src="رابط_صورة_الحيوان_هنا.jpg" alt="صورة الحيوان">
-        <h3>اسم الحيوان الأول</h3>
-        <p>وصف مختصر ومميزات الحيوان هنا.</p>
-        <p class="status">● الحالة: متوفر</p>
-    </div>
-
-    <div class="animal-card">
-        <img src="رابط_صورة_الحيوان_هنا.jpg" alt="صورة الحيوان">
-        <h3>اسم الحيوان الثاني</h3>
-        <p>وصف مختصر ومميزات الحيوان هنا.</p>
-        <p class="status">● الحالة: متوفر</p>
-    </div>
+<div class="nav">
+    <button onclick="filterAnimals('all')">الكل</button>
+    <button onclick="filterAnimals('bird')">الطيور</button>
+    <button onclick="filterAnimals('predator')">مفترسات</button>
+    <button onclick="filterAnimals('pet')">أليفة</button>
+    <button onclick="sortAsc()">فرز من الأرخص للأغلى</button>
 </div>
 
-<footer>
-    <p>جميع الحقوق محفوظة لـ "حيوانات عشيرة" &copy; 2026</p>
-</footer>
+<div class="container" id="animal-grid">
+    <script>
+        const birds = ["https://ibb.co/fYgTNcys", "https://ibb.co/fzPs3dyQ", "https://ibb.co/PG8WygTk", "https://ibb.co/LDXkM62P", "https://ibb.co/JjtN0w5y", "https://ibb.co/5xXBdh6Z", "https://ibb.co/Xx1fNFyz", "https://ibb.co/vSxPzt5"];
+        birds.forEach((src, i) => document.write(`<div class="animal-card" data-type="bird" data-price="1"><img src="${src}"><p>طائر مميز ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('طائر ${i+1}', 1)">إضافة</button></div>`));
+
+        // المفترسات (سعر 1 ريال كما طلبت)
+        const predators = ["https://ibb.co/jv22Cg2p", "https://ibb.co/0RXjmHvf", "https://ibb.co/HLwk26MY", "https://ibb.co/5g4fzBxz", "https://ibb.co/JRx2R4JZ"];
+        predators.forEach((src, i) => document.write(`<div class="animal-card" data-type="predator" data-price="1"><img src="${src}"><p>مفترس مميز ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('مفترس ${i+1}', 1)">إضافة</button></div>`));
+
+        // الأليفة (سعر 1 ريال كما طلبت)
+        const pets = ["https://ibb.co/0pnT2d0Y", "https://ibb.co/rRh4R8Ld", "https://ibb.co/0yzJ0G5V", "https://ibb.co/DDgzJh4C", "https://ibb.co/Y4YTyBFN", "https://ibb.co/wrMkNWz3", "https://ibb.co/p6J1CtnP"];
+        pets.forEach((src, i) => document.write(`<div class="animal-card" data-type="pet" data-price="1"><img src="${src}"><p>حيوان أليف ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('أليف ${i+1}', 1)">إضافة</button></div>`));
+    </script>
+</div>
+
+<div id="cart">
+    <h2>سلة المشتريات</h2>
+    <ul id="cart-items"></ul>
+    <h3>الإجمالي: <span id="total">0</span> ريال</h3>
+</div>
+
+<script>
+    function filterAnimals(type) {
+        document.querySelectorAll('.animal-card').forEach(card => {
+            card.style.display = (type === 'all' || card.getAttribute('data-type') === type) ? 'block' : 'none';
+        });
+    }
+
+    function sortAsc() {
+        const grid = document.getElementById('animal-grid');
+        Array.from(document.querySelectorAll('.animal-card')).sort((a, b) => 
+            a.getAttribute('data-price') - b.getAttribute('data-price')
+        ).forEach(card => grid.appendChild(card));
+    }
+
+    let total = 0;
+    function addToCart(name, price) {
+        document.getElementById('cart-items').innerHTML += `<li>${name} - ${price} ريال</li>`;
+        total += price;
+        document.getElementById('total').innerText = total;
+    }
+</script>
 
 </body>
 </html>
