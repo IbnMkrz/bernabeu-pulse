@@ -2,58 +2,67 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>يوميات غنومي | سيد الحارة</title>
+    <title>يوميات غنومي | الموقع الرسمي</title>
     <style>
         :root { --gold: #cca43b; --bg: #1a1a1a; --text: #ffffff; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); }
-        
-        .sidebar { position: fixed; right: -250px; top: 0; width: 250px; height: 100%; background: #000; padding-top: 60px; transition: 0.3s; }
-        .sidebar.active { right: 0; }
-        .sidebar a { display: block; color: var(--gold); padding: 15px; text-decoration: none; border-bottom: 1px solid #333; }
-        
-        header { padding: 20px; display: flex; justify-content: space-between; align-items: center; background: #000; }
-        .hero { text-align: center; padding: 40px; }
-        .profile-img { width: 200px; height: 200px; border-radius: 50%; border: 4px solid var(--gold); transform: rotate(180deg); }
-        
-        .card { background: #2a2a2a; padding: 20px; margin: 20px; border-radius: 15px; border-right: 5px solid var(--gold); }
-        .small-text { font-size: 0.7em; color: #888; margin-top: 5px; }
+        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); text-align: center; }
+        .page { display: none; padding: 20px; }
+        .active { display: block; }
+        .card { background: #2a2a2a; padding: 20px; margin: 20px auto; max-width: 500px; border-radius: 15px; border-right: 5px solid var(--gold); }
+        .btn { background: var(--gold); border: none; padding: 10px 20px; border-radius: 10px; cursor: pointer; color: #000; font-weight: bold; }
+        .profile-img { width: 200px; height: 200px; border-radius: 50%; border: 4px solid var(--gold); }
     </style>
 </head>
 <body>
 
-<header>
-    <div style="font-size: 20px; font-weight: bold;">يوميات غنومي</div>
-    <div onclick="document.querySelector('.sidebar').classList.toggle('active')" style="cursor:pointer; font-size: 30px;">☰</div>
+<header style="padding:20px; background:#000;">
+    <h1>يوميات غنومي</h1>
+    <nav>
+        <button onclick="showPage('home')">الرئيسية</button>
+        <button onclick="showPage('jokes')">الذبات</button>
+        <button onclick="showPage('game')">لعبة التصوير</button>
+    </nav>
 </header>
 
-<div class="sidebar">
-    <a href="#about">قصة حياتي</a>
-    <a href="#jokes">ذبات غنومي</a>
-    <a href="#school">عداد المدرسة</a>
-</div>
-
-<div class="hero">
+<!-- الصفحة الرئيسية -->
+<div id="home" class="page active">
     <img src="image.png" class="profile-img" alt="غنومي">
-    <h1>أنا غنام.. صاحب الطموح</h1>
+    <h2>أنا غنام.. سيد الحارة</h2>
+    <div class="card">
+        <p>السلام عليكم، اسمي غنام. ولدت وفي بطني "فلوس" بدلاً من الحليب.. وأطمح في مرسيدس من سيدي ولي العهد.</p>
+    </div>
 </div>
 
-<div id="about" class="card">
-    <h2>قصة حياتي</h2>
-    <p>السلام عليكم، اسمي غنام. ولدت وفي بطني "فلوس" بدلاً من الحليب، ومع الأيام بدأت أطلعها حبة حبة، لين صرت أغنى إنسان بالحارة (نظرياً طبعاً)!</p>
-    <p>أحب سيدي ولي العهد الأمير محمد بن سلمان، وأطمح في يوم من الأيام يمر من قدامي ويعطيني مرسيدس.</p>
-    <p class="small-text">يا رب يمر من عند بيتنا ويعطيني مرسيدس، تخيلوا المنظر بس!</p>
+<!-- صفحة الذبات -->
+<div id="jokes" class="page">
+    <h2>ذبات غنومي الحصرية</h2>
+    <div class="card"><p>كنت أمشي بالحارة، وفجأة الأرض قررت تسلم عليّ بقوة.. الجدار سألني: أنت بخير ولا نغير الديكور؟</p></div>
+    <div class="card"><p>قررت أصير جدي ولبست ثوب أبوي، مشيت 5 خطوات.. طحت في بركة موية وصرت "غنام الغواص".</p></div>
+    <div class="card"><p>مرة دخلت مطعم فخم، قلت لهم عطوني "وجبة التواضع"، جابوا لي حساب بـ 500 ريال.. تواضعت وطلعت أكلت فول!</p></div>
 </div>
 
-<div id="jokes" class="card">
-    <h2>ذبات غنومي</h2>
-    <p>"مرة كنت أمشي في الحارة، حبيت أسوي فيها بطل وأهجول، فجأة الأرض قررت تسوي لي 'بلوك' وطحت طيحة خلت الجدار يسألني: أنت بخير ولا نغير الديكور؟ ههههه."</p>
-    <p>"ومرة قررت أصير جدي، لبست ثوب أبوي، مشيت 5 خطوات.. طحت في بركة موية، والحين صرت معروف بـ 'غنام الغواص'."</p>
+<!-- صفحة اللعبة -->
+<div id="game" class="page">
+    <h2>لعبة "صور وجهك"</h2>
+    <button class="btn" onclick="takePhoto()">صورني</button>
+    <div id="result" style="margin-top:20px;"></div>
 </div>
 
-<div id="school" class="card">
-    <h2>العد التنازلي للمدرسة</h2>
-    <div style="font-size: 1.5em; color: var(--gold);">40 يوم على كابوس الاختبارات والصباح الباكر!</div>
-</div>
+<script>
+    function showPage(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function takePhoto() {
+        // محاكاة التصوير
+        document.getElementById('result').innerHTML = `
+            <h3>طلعت صورتك!</h3>
+            <img src="https://img.freepik.com/free-photo/funny-donkey-face_1203-847.jpg" style="width:200px; border-radius:10px;">
+            <p>هههههه! طلعت حمار!</p>
+        `;
+    }
+</script>
 
 </body>
 </html>
