@@ -2,33 +2,63 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>حيوانات عشيرة</title>
+    <title>حيوانات عشيرة | المتجر</title>
     <style>
-        body { font-family: sans-serif; background: #f4f4f4; text-align: center; }
+        body { font-family: sans-serif; background: #f4f4f4; margin: 0; padding-top: 80px; }
+        .floating-cart { position: fixed; top: 0; right: 0; width: 100%; background: #2c3e50; color: white; padding: 15px 20px; text-align: center; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
+        .nav { background: #ddd; padding: 10px; text-align: center; }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; padding: 20px; }
-        .card { background: white; padding: 10px; border-radius: 8px; border: 1px solid #ddd; }
-        .card img { width: 100%; height: 150px; object-fit: cover; }
-        .price { color: red; font-weight: bold; }
-        button { background: #27ae60; border: none; color: white; padding: 8px; width: 100%; cursor: pointer; }
+        .card { background: white; padding: 10px; border-radius: 8px; border: 1px solid #ddd; text-align: center; }
+        .card img { width: 100%; height: 150px; object-fit: cover; border-radius: 5px; }
+        button { background: #27ae60; color: white; border: none; padding: 8px; cursor: pointer; width: 100%; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-<h1>حيوانات عشيرة</h1>
-
-<div class="grid">
-    <div class="card">
-        <img src="https://i.ibb.co/fYgTNcys/bird1.jpg" alt="صورة">
-        <p>السعر: 1 ريال</p>
-        <button onclick="alert('تمت الإضافة')">إضافة</button>
-    </div>
-    
-    <div class="card">
-        <img src="https://i.ibb.co/jv22Cg2p/pred1.jpg" alt="صورة">
-        <p>السعر: 350 ريال</p>
-        <button onclick="alert('تمت الإضافة')">إضافة</button>
-    </div>
+<div class="floating-cart">
+    <span>🛒 سلة حيوانات عشيرة</span>
+    <span id="total-display">الإجمالي: 0 ريال</span>
 </div>
 
+<div class="nav">
+    <button onclick="sortGrid()">فرز من الأرخص للأغلى</button>
+</div>
+
+<div class="grid" id="mainGrid">
+    <div class="card" data-price="1"><img src="https://i.ibb.co/fYgTNcys/bird1.jpg"><p>عصفور - 1 ريال</p><button onclick="addToCart(1)">إضافة</button></div>
+    <div class="card" data-price="1"><img src="https://i.ibb.co/fzPs3dyQ/dog1.jpg"><p>كلب - 1 ريال</p><button onclick="addToCart(1)">إضافة</button></div>
+    <div class="card" data-price="1"><img src="https://i.ibb.co/PG8WygTk/lioness1.jpg"><p>لبوه - 1 ريال</p><button onclick="addToCart(1)">إضافة</button></div>
+
+    <div class="card" data-price="320"><img src="https://i.ibb.co/LDXkM62P/b1.jpg"><p>طير - 320 ريال</p><button onclick="addToCart(320)">إضافة</button></div>
+    <div class="card" data-price="340"><img src="https://i.ibb.co/JjtN0w5y/b2.jpg"><p>طير - 340 ريال</p><button onclick="addToCart(340)">إضافة</button></div>
+    <div class="card" data-price="310"><img src="https://i.ibb.co/5xXBdh6Z/b3.jpg"><p>طير - 310 ريال</p><button onclick="addToCart(310)">إضافة</button></div>
+    <div class="card" data-price="360"><img src="https://i.ibb.co/Xx1fNFyz/b4.jpg"><p>طير - 360 ريال</p><button onclick="addToCart(360)">إضافة</button></div>
+    <div class="card" data-price="380"><img src="https://i.ibb.co/vSxPzt5/b5.jpg"><p>طير - 380 ريال</p><button onclick="addToCart(380)">إضافة</button></div>
+
+    <div class="card" data-price="400"><img src="https://i.ibb.co/jv22Cg2p/p1.jpg"><p>مفترس - 400 ريال</p><button onclick="addToCart(400)">إضافة</button></div>
+    <div class="card" data-price="390"><img src="https://i.ibb.co/0RXjmHvf/p2.jpg"><p>مفترس - 390 ريال</p><button onclick="addToCart(390)">إضافة</button></div>
+    <div class="card" data-price="370"><img src="https://i.ibb.co/HLwk26MY/p3.jpg"><p>مفترس - 370 ريال</p><button onclick="addToCart(370)">إضافة</button></div>
+    <div class="card" data-price="350"><img src="https://i.ibb.co/5g4fzBxz/p4.jpg"><p>مفترس - 350 ريال</p><button onclick="addToCart(350)">إضافة</button></div>
+    <div class="card" data-price="330"><img src="https://i.ibb.co/JRx2R4JZ/p5.jpg"><p>مفترس - 330 ريال</p><button onclick="addToCart(330)">إضافة</button></div>
+
+    <div class="card" data-price="300"><img src="https://i.ibb.co/0pnT2d0Y/a1.jpg"><p>أليف - 300 ريال</p><button onclick="addToCart(300)">إضافة</button></div>
+    <div class="card" data-price="315"><img src="https://i.ibb.co/rRh4R8Ld/a2.jpg"><p>أليف - 315 ريال</p><button onclick="addToCart(315)">إضافة</button></div>
+    <div class="card" data-price="325"><img src="https://i.ibb.co/0yzJ0G5V/a3.jpg"><p>أليف - 325 ريال</p><button onclick="addToCart(325)">إضافة</button></div>
+    <div class="card" data-price="355"><img src="https://i.ibb.co/DDgzJh4C/a4.jpg"><p>أليف - 355 ريال</p><button onclick="addToCart(355)">إضافة</button></div>
+    <div class="card" data-price="385"><img src="https://i.ibb.co/Y4YTyBFN/a5.jpg"><p>أليف - 385 ريال</p><button onclick="addToCart(385)">إضافة</button></div>
+    <div class="card" data-price="345"><img src="https://i.ibb.co/wrMkNWz3/a6.jpg"><p>أليف - 345 ريال</p><button onclick="addToCart(345)">إضافة</button></div>
+    <div class="card" data-price="395"><img src="https://i.ibb.co/p6J1CtnP/a7.jpg"><p>أليف - 395 ريال</p><button onclick="addToCart(395)">إضافة</button></div>
+</div>
+
+<script>
+    let total = 0;
+    function addToCart(price) { total += price; document.getElementById('total-display').innerText = "الإجمالي: " + total + " ريال"; }
+    function sortGrid() {
+        const grid = document.getElementById('mainGrid');
+        const cards = Array.from(document.querySelectorAll('.card'));
+        cards.sort((a, b) => a.dataset.price - b.dataset.price);
+        cards.forEach(card => grid.appendChild(card));
+    }
+</script>
 </body>
 </html>
