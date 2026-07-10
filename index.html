@@ -2,69 +2,45 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>حلوين عشيرة</title>
+    <title>حيوانات عشيرة | الموقع الرسمي</title>
     <style>
-        body { text-align: center; font-family: 'Segoe UI', sans-serif; margin: 0; padding: 20px; background: linear-gradient(135deg, #f6d365 0%, #fda085 100%); min-height: 100vh; }
-        h1 { color: #fff; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
-        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        img { width: 100%; height: auto; border-radius: 15px; display: block; transition: opacity 0.3s ease-in-out; }
-        .controls { margin-top: 20px; display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-        button { padding: 10px 20px; font-size: 16px; cursor: pointer; background-color: #333; color: white; border: none; border-radius: 20px; transition: 0.3s; }
-        button:hover { background-color: #000; transform: scale(1.05); }
-        .random-btn { padding: 15px 40px; font-size: 18px; margin-top: 15px; background-color: #ff6b6b; }
+        body { font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; background-color: #f4f4f4; color: #333; }
+        header { background-color: #2c3e50; color: white; padding: 2rem; text-align: center; }
+        .container { max-width: 1100px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding: 0 20px; }
+        .animal-card { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); text-align: center; }
+        .animal-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; background-color: #ddd; }
+        .animal-card h3 { margin: 10px 0; color: #2c3e50; }
+        .status { font-weight: bold; color: #27ae60; }
+        footer { text-align: center; padding: 2rem; color: #777; }
     </style>
 </head>
 <body>
 
-    <h1>حلوين عشيرة</h1>
-    <div id="image-container">
-        <img id="random-img" src="https://i.ibb.co/pt86zfd/1.jpg" alt="صورة">
+<header>
+    <h1>موقع حيوانات عشيرة الرسمي</h1>
+    <p>الجودة، الأمانة، والتميز في عالم الحيوان</p>
+</header>
+
+<div class="container">
+    <!-- يمكنك تكرار هذا القسم لكل حيوان -->
+    <div class="animal-card">
+        <img src="رابط_صورة_الحيوان_هنا.jpg" alt="صورة الحيوان">
+        <h3>اسم الحيوان الأول</h3>
+        <p>وصف مختصر ومميزات الحيوان هنا.</p>
+        <p class="status">● الحالة: متوفر</p>
     </div>
 
-    <div class="controls">
-        <button onclick="changeImage(-1)">السابق</button>
-        <button onclick="changeImage(1)">التالي</button>
+    <div class="animal-card">
+        <img src="رابط_صورة_الحيوان_هنا.jpg" alt="صورة الحيوان">
+        <h3>اسم الحيوان الثاني</h3>
+        <p>وصف مختصر ومميزات الحيوان هنا.</p>
+        <p class="status">● الحالة: متوفر</p>
     </div>
-    
-    <button class="random-btn" onclick="randomImage()">صورة عشوائية</button>
+</div>
 
-    <script>
-        const images = [
-            "https://i.ibb.co/pt86zfd/1.jpg",
-            "https://i.ibb.co/4wKWZnZw/2.jpg",
-            "https://i.ibb.co/ZRyJstjn/3.jpg",
-            "https://i.ibb.co/N6DP9KkM/4.jpg",
-            "https://i.ibb.co/C5rNxzN5/5.jpg",
-            "https://i.ibb.co/FkF9QQn1/6.jpg",
-            "https://i.ibb.co/F4kRc7Hx/7.jpg",
-            "https://i.ibb.co/BVmBSYYj/8.jpg",
-            "https://i.ibb.co/4wywkT1b/9.jpg",
-            "https://i.ibb.co/ksVBHjt5/10.jpg"
-        ];
-        
-        let currentIndex = 0;
+<footer>
+    <p>جميع الحقوق محفوظة لـ "حيوانات عشيرة" &copy; 2026</p>
+</footer>
 
-        function updateImage() {
-            const img = document.getElementById('random-img');
-            img.style.opacity = 0;
-            setTimeout(() => {
-                img.src = images[currentIndex];
-                img.style.opacity = 1;
-            }, 200);
-        }
-
-        function changeImage(direction) {
-            currentIndex += direction;
-            if (currentIndex < 0) currentIndex = images.length - 1;
-            if (currentIndex >= images.length) currentIndex = 0;
-            updateImage();
-        }
-
-        function randomImage() {
-            currentIndex = Math.floor(Math.random() * images.length);
-            updateImage();
-        }
-    </script>
 </body>
 </html>
