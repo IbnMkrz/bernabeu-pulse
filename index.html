@@ -1,18 +1,27 @@
-<!-- صفحة اللعبة المحدثة -->
-<div id="game" class="page">
-    <h2>لعبة "صور وجهك"</h2>
-    <p>اضغط الزر وشوف وجهك الحقيقي!</p>
-    <button class="btn" onclick="takePhoto()">صورني</button>
-    <div id="result" style="margin-top:20px;"></div>
-</div>
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>يوميات غنومي | ملك الحارة</title>
+    <style>
+        body { background: #000; color: #cca43b; font-family: 'Segoe UI', sans-serif; text-align: center; padding: 20px; }
+        .hero-img { width: 250px; border: 5px solid #cca43b; border-radius: 50%; margin-bottom: 20px; }
+        h1 { font-size: 3em; margin-bottom: 10px; }
+        .quote { font-style: italic; color: #fff; margin-bottom: 30px; }
+        .btn { background: #cca43b; color: #000; border: none; padding: 15px 30px; font-size: 1.2em; border-radius: 50px; cursor: pointer; font-weight: bold; }
+        #result { margin-top: 30px; }
+    </style>
+</head>
+<body>
 
-<script>
-    function takePhoto() {
-        // سيقوم الكود الآن بعرض صورتك المخصصة (image_2.png)
-        document.getElementById('result').innerHTML = `
-            <h3>طلعت صورتك!</h3>
-            <img src="image_2.png" style="width:250px; border-radius:15px; border: 3px solid var(--gold);">
-            <p style="margin-top:10px; font-weight:bold; color:var(--gold);">هههههه! طالع نسخة طبق الأصل!</p>
-        `;
-    }
-</script>
+    <img src="image.png" class="hero-img" alt="غنام ملك الحارة">
+    <h1>أنا غنام.. ملك الحارة</h1>
+    <p class="quote">"الذهب لا يصدأ، وغنام لا يطيح.. إلا إذا قررت الأرض تسلم عليّ!"</p>
+
+    <div id="content">
+        <button class="btn" onclick="document.getElementById('result').innerHTML='<img src=image_2.png style=width:250px; border-radius:20px;><h3>طلعت صورة الملك!</h3>'">اضغط هنا لتشوف وجهك الحقيقي</button>
+        <div id="result"></div>
+    </div>
+
+</body>
+</html>
