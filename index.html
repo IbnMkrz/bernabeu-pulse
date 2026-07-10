@@ -2,102 +2,90 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>حيوانات عشيرة | الموقع الرسمي</title>
+    <title>حيوانات عشيرة | المتجر الرسمي</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f4f4; margin: 0; }
-        header { background-color: #1a252f; color: white; padding: 2rem; text-align: center; }
-        .nav { text-align: center; padding: 20px; background: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .container { max-width: 1200px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 20px; }
-        .animal-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .animal-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        .price { color: #c0392b; font-weight: bold; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f4f4f4; margin: 0; }
+        header { background-color: #1a252f; color: white; padding: 20px; text-align: center; }
+        .nav { background: #fff; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 20px; }
+        .card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
+        .card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; margin-bottom: 10px; }
+        .price { color: #c0392b; font-weight: bold; font-size: 1.2rem; }
         button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
-        #cart { background: #fff; padding: 20px; margin: 2rem auto; max-width: 800px; border: 2px solid #1a252f; border-radius: 10px; }
+        #cart { background: #fff; padding: 20px; margin: 20px; border-radius: 10px; border: 2px solid #1a252f; }
     </style>
 </head>
 <body>
 
-<header>
-    <h1>حيوانات عشيرة</h1>
-    <button onclick="document.getElementById('cart').scrollIntoView({behavior:'smooth'})">🛒 الانتقال للسلة</button>
-</header>
+<header><h1>حيوانات عشيرة</h1></header>
 
 <div class="nav">
-    <button onclick="filterAnimals('all')">الكل</button>
-    <button onclick="filterAnimals('bird')">الطيور</button>
-    <button onclick="filterAnimals('predator')">المفترسات</button>
-    <button onclick="filterAnimals('pet')">الأليفة</button>
-    <button onclick="sortAnimals()">فرز من الأرخص للأغلى</button>
+    <button onclick="filter('all')">الكل</button>
+    <button onclick="filter('special')">مميز (1 ريال)</button>
+    <button onclick="filter('regular')">متوفر (300-400 ريال)</button>
+    <button onclick="sortItems()">فرز حسب السعر</button>
+    <button onclick="document.getElementById('cart').scrollIntoView()">🛒 السلة</button>
 </div>
 
-<div class="container" id="grid"></div>
+<div class="container" id="grid">
+    <div class="card" data-price="1" data-type="special">
+        <img src="https://ibb.co/fYgTNcys" alt="منتج خاص">
+        <h3>طائر خاص 1</h3>
+        <p class="price">1 ريال</p>
+        <button onclick="add('طائر خاص 1', 1)">إضافة</button>
+    </div>
+    <div class="card" data-price="1" data-type="special">
+        <img src="https://ibb.co/fzPs3dyQ" alt="منتج خاص">
+        <h3>طائر خاص 2</h3>
+        <p class="price">1 ريال</p>
+        <button onclick="add('طائر خاص 2', 1)">إضافة</button>
+    </div>
+    <div class="card" data-price="1" data-type="special">
+        <img src="https://ibb.co/PG8WygTk" alt="منتج خاص">
+        <h3>طائر خاص 3</h3>
+        <p class="price">1 ريال</p>
+        <button onclick="add('طائر خاص 3', 1)">إضافة</button>
+    </div>
+
+    <div class="card" data-price="350" data-type="regular">
+        <img src="https://ibb.co/jv22Cg2p" alt="مفترس">
+        <h3>مفترس مميز</h3>
+        <p class="price">350 ريال</p>
+        <button onclick="add('مفترس مميز', 350)">إضافة</button>
+    </div>
+    <div class="card" data-price="320" data-type="regular">
+        <img src="https://ibb.co/0pnT2d0Y" alt="أليف">
+        <h3>حيوان أليف فاخر</h3>
+        <p class="price">320 ريال</p>
+        <button onclick="add('حيوان أليف فاخر', 320)">إضافة</button>
+    </div>
+</div>
 
 <div id="cart">
     <h2>سلة المشتريات</h2>
-    <ul id="cart-items"></ul>
+    <ul id="cart-list"></ul>
     <h3>الإجمالي: <span id="total">0</span> ريال</h3>
 </div>
 
 <script>
-    // توزيع الروابط والأسعار
-    const animals = [
-        // أول 3 روابط بـ 1 ريال
-        {name: "طائر مميز", type: "bird", price: 1, img: "https://ibb.co/fYgTNcys"},
-        {name: "طائر نادر", type: "bird", price: 1, img: "https://ibb.co/fzPs3dyQ"},
-        {name: "طائر جارح", type: "bird", price: 1, img: "https://ibb.co/PG8WygTk"},
-        // باقي الطيور
-        {name: "طائر أليف", type: "bird", price: 350, img: "https://ibb.co/LDXkM62P"},
-        {name: "طائر ملون", type: "bird", price: 320, img: "https://ibb.co/JjtN0w5y"},
-        {name: "طائر مهاجر", type: "bird", price: 380, img: "https://ibb.co/5xXBdh6Z"},
-        {name: "طائر زينة", type: "bird", price: 310, img: "https://ibb.co/Xx1fNFyz"},
-        {name: "طائر صغير", type: "bird", price: 340, img: "https://ibb.co/vSxPzt5"},
-        // المفترسات
-        {name: "نمر عشيرة", type: "predator", price: 400, img: "https://ibb.co/jv22Cg2p"},
-        {name: "أسد صغير", type: "predator", price: 390, img: "https://ibb.co/0RXjmHvf"},
-        {name: "فهد جبلي", type: "predator", price: 370, img: "https://ibb.co/HLwk26MY"},
-        {name: "ذئب وفي", type: "predator", price: 360, img: "https://ibb.co/5g4fzBxz"},
-        {name: "صقر مفترس", type: "predator", price: 330, img: "https://ibb.co/JRx2R4JZ"},
-        // الأليفة
-        {name: "قطة جميلة", type: "pet", price: 300, img: "https://ibb.co/0pnT2d0Y"},
-        {name: "أرنب أبيض", type: "pet", price: 315, img: "https://ibb.co/rRh4R8Ld"},
-        {name: "هامستر", type: "pet", price: 325, img: "https://ibb.co/0yzJ0G5V"},
-        {name: "جرو صغير", type: "pet", price: 355, img: "https://ibb.co/DDgzJh4C"},
-        {name: "ببغاء أليف", type: "pet", price: 385, img: "https://ibb.co/Y4YTyBFN"},
-        {name: "سلحفاة", type: "pet", price: 345, img: "https://ibb.co/wrMkNWz3"},
-        {name: "سمكة ذهبية", type: "pet", price: 395, img: "https://ibb.co/p6J1CtnP"}
-    ];
-
-    function render(data) {
-        const grid = document.getElementById('grid');
-        grid.innerHTML = "";
-        data.forEach(a => {
-            grid.innerHTML += `<div class="animal-card" data-type="${a.type}">
-                <img src="${a.img}" onerror="this.src='https://via.placeholder.com/200'">
-                <h3>${a.name}</h3>
-                <p class="price">${a.price} ريال</p>
-                <button onclick="addToCart('${a.name}', ${a.price})">إضافة للسلة</button>
-            </div>`;
-        });
-    }
-
-    function sortAnimals() {
-        animals.sort((a, b) => a.price - b.price);
-        render(animals);
-    }
-
-    function filterAnimals(type) {
-        if(type === 'all') return render(animals);
-        render(animals.filter(a => a.type === type));
-    }
-
-    let total = 0;
-    function addToCart(name, price) {
-        document.getElementById('cart-items').innerHTML += `<li>${name} - ${price} ريال</li>`;
-        total += price;
+    function add(name, price) {
+        document.getElementById('cart-list').innerHTML += `<li>${name} - ${price} ريال</li>`;
+        let total = parseInt(document.getElementById('total').innerText) + price;
         document.getElementById('total').innerText = total;
     }
 
-    render(animals);
+    function filter(type) {
+        document.querySelectorAll('.card').forEach(c => {
+            c.style.display = (type === 'all' || c.dataset.type === type) ? 'block' : 'none';
+        });
+    }
+
+    function sortItems() {
+        const grid = document.getElementById('grid');
+        const cards = Array.from(document.querySelectorAll('.card'));
+        cards.sort((a, b) => a.dataset.price - b.dataset.price);
+        cards.forEach(c => grid.appendChild(c));
+    }
 </script>
 
 </body>
