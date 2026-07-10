@@ -2,42 +2,41 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>يوميات غنومي | حلو عشيرة</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حلوين عشيرة</title>
     <style>
-        body { background: #000; color: #cca43b; font-family: sans-serif; text-align: center; padding: 20px; }
-        .box { background: #1a1a1a; padding: 20px; border-radius: 20px; border: 2px solid #cca43b; margin: 15px auto; max-width: 500px; }
-        .hero { width: 200px; border-radius: 50%; border: 4px solid #cca43b; }
-        .btn { background: #cca43b; color: #000; border: none; padding: 15px 30px; border-radius: 30px; font-weight: bold; cursor: pointer; }
+        body { text-align: center; font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
+        #image-container { margin: 20px auto; width: 100%; max-width: 500px; }
+        img { width: 100%; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; background-color: #ff6b6b; color: white; border: none; border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <img src="https://i.ibb.co/YTydqdNf/image.png" class="hero" alt="غنومي">
-    <h1>أنا غنومي.. حلو عشيرة</h1>
+    <h1>حلوين عشيرة</h1>
+    <p>اضغط علي الزر لرؤية اجمل ما خلق الله</p>
     
-    <div class="box">
-        <h3>قصة غنومي</h3>
-        <p>ولدت وفي بطني فلوس، وكل ماكبرت ازق 50 الف لين طفرت وأطمح بمرسيدس من سيدي ولي العهد. <br><small>لو سواها والله لعشيه من شوايه مرحبا يستاهل!</small></p>
+    <button onclick="changeImage()">اضغط هنا</button>
+
+    <div id="image-container">
+        <img id="random-img" src="" alt="صورة">
     </div>
 
-    <div class="box">
-        <h3>ذبات غنومي الجديدة</h3>
-        <p>1. في ياباني اسمه تمادا يوم كبر وقفوه عند حده.</p>
-        <p>2. في واحد لف انعوج.</p>
-        <p>3. فيه وحده اسمها بتول يوم كبرت صارت بالعرض.</p>
-        <p>4. فيه زهرانيه راحت تسوي ليزر قالولها كل منطقه بسعر، قالت: أنا من الباحه!</p>
-    </div>
+    <script>
+        // هنا قمت بوضع صورك كبيانات نصية مشفرة (Base64)
+        const images = [
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA...", // ضع هنا كود Base64 للصورة الأولى
+            "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAA..."  // وهكذا لباقي الصور
+        ];
 
-    <div class="box">
-        <h3>لعبة كشف الحقيقة</h3>
-        <button class="btn" onclick="document.getElementById('result').innerHTML='<img src=https://i.ibb.co/XkDPkWFz/image.png style=width:200px; border-radius:20px;><p>هههههه! طلعت صورتك!</p>'">اضغط هنا لتشوف وجهك</button>
-        <div id="result"></div>
-    </div>
-
-    <div class="box">
-        <h3>العد التنازلي</h3>
-        <p style="color:#fff;">باقي 40 يوم على كابوس المدرسة!</p>
-    </div>
-
+        function changeImage() {
+            const img = document.getElementById('random-img');
+            const randomIdx = Math.floor(Math.random() * images.length);
+            img.src = images[randomIdx];
+        }
+        
+        // عرض صورة عند فتح الموقع لأول مرة
+        changeImage();
+    </script>
 </body>
 </html>
