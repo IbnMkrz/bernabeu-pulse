@@ -5,71 +5,85 @@
     <title>حيوانات عشيرة | الموقع الرسمي</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f4f4; margin: 0; }
-        header { background-color: #1a252f; color: white; padding: 2rem; text-align: center; }
-        .nav { text-align: center; padding: 20px; background: #ddd; }
-        .container { max-width: 1200px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; padding: 0 20px; }
-        .animal-card { background: white; padding: 15px; border-radius: 10px; border: 1px solid #ddd; text-align: center; }
-        .animal-card img { width: 100%; height: 200px; object-fit: cover; border-radius: 5px; }
-        .price { color: #c0392b; font-weight: bold; font-size: 1.2rem; }
-        #cart { background: #fff; padding: 20px; margin: 2rem auto; max-width: 800px; border: 2px solid #1a252f; border-radius: 10px; }
-        button { background: #27ae60; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        header { background-color: #1a252f; color: white; padding: 2rem; text-align: center; position: relative; }
+        .cart-icon { position: absolute; top: 20px; left: 20px; font-size: 24px; cursor: pointer; color: #f1c40f; }
+        .nav { text-align: center; padding: 20px; background: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .container { max-width: 1200px; margin: 2rem auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 0 20px; }
+        .animal-card { background: white; padding: 20px; border-radius: 12px; border: 1px solid #eee; text-align: center; transition: 0.3s; }
+        .animal-card img { width: 100%; height: 220px; object-fit: cover; border-radius: 8px; margin-bottom: 10px; }
+        .price { color: #e74c3c; font-weight: bold; font-size: 1.3rem; margin: 10px 0; }
+        button { background: #2c3e50; color: white; border: none; padding: 12px 25px; border-radius: 6px; cursor: pointer; }
+        #cart-section { background: #fff; padding: 30px; margin: 2rem auto; max-width: 800px; border-radius: 15px; border: 1px solid #ddd; }
     </style>
 </head>
 <body>
 
 <header>
     <h1>حيوانات عشيرة</h1>
+    <div class="cart-icon" onclick="document.getElementById('cart-section').scrollIntoView({behavior:'smooth'})">🛒 سلة المشتريات</div>
 </header>
 
 <div class="nav">
     <button onclick="filterAnimals('all')">الكل</button>
-    <button onclick="filterAnimals('bird')">الطيور</button>
-    <button onclick="filterAnimals('predator')">مفترسات</button>
-    <button onclick="filterAnimals('pet')">أليفة</button>
-    <button onclick="sortAsc()">فرز من الأرخص للأغلى</button>
+    <button onclick="filterAnimals('special')">مميز (1 ريال)</button>
+    <button onclick="filterAnimals('regular')">متوفر (300-400 ريال)</button>
+    <button onclick="sortAnimals()">فرز من الأرخص للأغلى</button>
 </div>
 
-<div class="container" id="animal-grid">
-    <script>
-        const birds = ["https://ibb.co/fYgTNcys", "https://ibb.co/fzPs3dyQ", "https://ibb.co/PG8WygTk", "https://ibb.co/LDXkM62P", "https://ibb.co/JjtN0w5y", "https://ibb.co/5xXBdh6Z", "https://ibb.co/Xx1fNFyz", "https://ibb.co/vSxPzt5"];
-        birds.forEach((src, i) => document.write(`<div class="animal-card" data-type="bird" data-price="1"><img src="${src}"><p>طائر مميز ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('طائر ${i+1}', 1)">إضافة</button></div>`));
+<div class="container" id="grid">
+    </div>
 
-        // المفترسات (سعر 1 ريال كما طلبت)
-        const predators = ["https://ibb.co/jv22Cg2p", "https://ibb.co/0RXjmHvf", "https://ibb.co/HLwk26MY", "https://ibb.co/5g4fzBxz", "https://ibb.co/JRx2R4JZ"];
-        predators.forEach((src, i) => document.write(`<div class="animal-card" data-type="predator" data-price="1"><img src="${src}"><p>مفترس مميز ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('مفترس ${i+1}', 1)">إضافة</button></div>`));
-
-        // الأليفة (سعر 1 ريال كما طلبت)
-        const pets = ["https://ibb.co/0pnT2d0Y", "https://ibb.co/rRh4R8Ld", "https://ibb.co/0yzJ0G5V", "https://ibb.co/DDgzJh4C", "https://ibb.co/Y4YTyBFN", "https://ibb.co/wrMkNWz3", "https://ibb.co/p6J1CtnP"];
-        pets.forEach((src, i) => document.write(`<div class="animal-card" data-type="pet" data-price="1"><img src="${src}"><p>حيوان أليف ${i+1}</p><p class="price">1 ريال</p><button onclick="addToCart('أليف ${i+1}', 1)">إضافة</button></div>`));
-    </script>
-</div>
-
-<div id="cart">
+<div id="cart-section">
     <h2>سلة المشتريات</h2>
-    <ul id="cart-items"></ul>
+    <ul id="cart-list"></ul>
     <h3>الإجمالي: <span id="total">0</span> ريال</h3>
 </div>
 
 <script>
-    function filterAnimals(type) {
-        document.querySelectorAll('.animal-card').forEach(card => {
-            card.style.display = (type === 'all' || card.getAttribute('data-type') === type) ? 'block' : 'none';
+    // قائمة الحيوانات (تم توزيع الأسعار كما طلبت)
+    const animals = [
+        // الروابط الثلاثة الأولى بسعر 1 ريال
+        {name: "طائر خاص 1", type: "special", price: 1, img: "https://ibb.co/fYgTNcys"},
+        {name: "طائر خاص 2", type: "special", price: 1, img: "https://ibb.co/fzPs3dyQ"},
+        {name: "طائر خاص 3", type: "special", price: 1, img: "https://ibb.co/PG8WygTk"},
+        // باقي الصور بسعر عشوائي بين 300 و 400
+        {name: "طائر متوفر", type: "regular", price: 350, img: "https://ibb.co/LDXkM62P"},
+        {name: "مفترس متوفر", type: "regular", price: 400, img: "https://ibb.co/jv22Cg2p"},
+        {name: "أليف متوفر", type: "regular", price: 320, img: "https://ibb.co/0pnT2d0Y"}
+    ];
+
+    function render() {
+        const grid = document.getElementById('grid');
+        grid.innerHTML = "";
+        animals.forEach(a => {
+            grid.innerHTML += `<div class="animal-card" data-price="${a.price}" data-type="${a.type}">
+                <img src="${a.img}" onerror="this.src='https://via.placeholder.com/220'">
+                <h3>${a.name}</h3>
+                <p class="price">${a.price} ريال</p>
+                <button onclick="addToCart('${a.name}', ${a.price})">إضافة للسلة</button>
+            </div>`;
         });
     }
 
-    function sortAsc() {
-        const grid = document.getElementById('animal-grid');
-        Array.from(document.querySelectorAll('.animal-card')).sort((a, b) => 
-            a.getAttribute('data-price') - b.getAttribute('data-price')
-        ).forEach(card => grid.appendChild(card));
+    function sortAnimals() {
+        animals.sort((a, b) => a.price - b.price);
+        render();
+    }
+
+    function filterAnimals(type) {
+        document.querySelectorAll('.animal-card').forEach(c => {
+            c.style.display = (type === 'all' || c.dataset.type === type) ? 'block' : 'none';
+        });
     }
 
     let total = 0;
-    function addToCart(name, price) {
-        document.getElementById('cart-items').innerHTML += `<li>${name} - ${price} ريال</li>`;
-        total += price;
+    function addToCart(n, p) {
+        total += p;
+        document.getElementById('cart-list').innerHTML += `<li>${n} - ${p} ريال</li>`;
         document.getElementById('total').innerText = total;
     }
+
+    render();
 </script>
 
 </body>
