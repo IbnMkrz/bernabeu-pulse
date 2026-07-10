@@ -2,15 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>حلوين عشيرة</title>
     <style>
-        body { text-align: center; font-family: sans-serif; padding: 20px; background-color: #f4f4f9; }
-        h1 { color: #333; }
-        #image-container { margin: 20px auto; width: 100%; max-width: 500px; min-height: 300px; }
-        img { width: 100%; height: auto; border-radius: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
-        button { padding: 15px 30px; font-size: 18px; cursor: pointer; background-color: #ff6b6b; color: white; border: none; border-radius: 10px; margin-top: 20px; }
-        button:hover { background-color: #ff4757; }
+        body { text-align: center; font-family: sans-serif; background: linear-gradient(135deg, #f6d365, #fda085); min-height: 100vh; padding: 20px; }
+        #image-container { margin: 20px auto; width: 100%; max-width: 400px; background: white; padding: 10px; border-radius: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        img { width: 100%; height: auto; border-radius: 15px; transition: opacity 0.5s; }
+        button { padding: 15px 40px; font-size: 20px; cursor: pointer; background: #333; color: white; border: none; border-radius: 50px; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -18,31 +15,23 @@
     <h1>حلوين عشيرة</h1>
     <p>اضغط على الزر لرؤية أجمل ما خلق الله</p>
     
-    <button onclick="changeImage()">اضغط هنا</button>
-
     <div id="image-container">
-        <img id="random-img" src="https://i.imgur.com/k7j4M2E.png" alt="صورة">
+        <img id="random-img" src="1.png" alt="صورة">
     </div>
 
-    <script>
-        // روابط صورك المباشرة والموثوقة
-        const images = [
-            "https://i.imgur.com/k7j4M2E.png",
-            "https://i.imgur.com/g8z1W5P.png",
-            "https://i.imgur.com/y3x9B2Q.png",
-            "https://i.imgur.com/m5n2V8L.png",
-            "https://i.imgur.com/x9c4L7K.png",
-            "https://i.imgur.com/b2w1J6O.png",
-            "https://i.imgur.com/j8h7N3Z.png",
-            "https://i.imgur.com/w9k6X5Q.png",
-            "https://i.imgur.com/q1v2R9M.png",
-            "https://i.imgur.com/h4f8L3K.png"
-        ];
+    <button onclick="changeImage()">شاهد الجمال</button>
 
+    <script>
         function changeImage() {
             const img = document.getElementById('random-img');
-            const randomIdx = Math.floor(Math.random() * images.length);
-            img.src = images[randomIdx];
+            // اختيار رقم من 1 إلى 10
+            const randomNum = Math.floor(Math.random() * 10) + 1;
+            // تحميل الصورة بناءً على الاسم المباشر
+            img.style.opacity = 0;
+            setTimeout(() => {
+                img.src = randomNum + ".png";
+                img.style.opacity = 1;
+            }, 300);
         }
     </script>
 </body>
